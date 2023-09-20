@@ -52,10 +52,16 @@ export default async function handler(
     timestamp: Math.floor(Date.now() / 1000),
   })
 
+  // create random data to return from the endpoint
   const data = randomUUID()
 
+  // create a log entry for the request
+  const log = await prisma.log.create({
+    data: { userId: user?.id, status: 200, method: 'GET' },
+  })
+
   // return the result
-  return res.status(200).json({ status: 200, data })
+  return res.status(200).json({ key: data, log })
 }
 
 // Path: src/pages/api/auth/endpoint.ts

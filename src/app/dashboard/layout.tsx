@@ -1,8 +1,15 @@
+import { confirmUserIsLoggedIn } from '~/lib/auth'
+import { createCustomerIfNull } from '~/lib/stripe'
+
 type DashboardLayoutProps = {
   children: React.ReactNode
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
+  await confirmUserIsLoggedIn()
+
   return <div className="max-w-5xl m-auto w-full px-4">{children}</div>
 }
 
